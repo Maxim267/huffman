@@ -3,8 +3,8 @@ package priorityQ;
 import hashTable.HashTable;
 import listQ.LinkQ;
 import listQ.ListQ;
-import listTreeQ.LinkT;
-import listTreeQ.ListT;
+import listT.LinkT;
+import listT.ListT;
 import treeQ.NodeQ;
 
 import java.io.IOException;
@@ -13,15 +13,29 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/**
+ * Приоритетная очередь {@code PriorityQ} для формирования дерева Хаффмана
+ */
 public class PriorityQ {
+    /**
+     * Связанный список {@code ListT} содержит элементы {@code LinkT} с использованием деревьев {@code TreeQ}
+     */
     private ListT list;
     private int nElem;
-    private HashTable hash;
+    /**
+     * Хеш-таблица {@code hashText} используется как частотная таблица символов кодируемого текста
+     */
+    private HashTable hashText;
+    /**
+     * Хеш-таблица {@code hashCharset} используется как набор символов кодировки
+     */
     private HashTable hashCharset;
     private int nMinLengthCharset;
     private String filePath;
     private final String delimiter = "<=>";
-
+    /**
+     * Символы новой строки. Однобайтовый используется при кодировании. Многобайтовый используется при раскодировании.
+     */
     public static final String windowsNewRow = "\r\n";
     public static final String unixNewRow = "\n";
     public PriorityQ() {
@@ -30,6 +44,9 @@ public class PriorityQ {
     public ListT getList() {
         return list;
     }
+    /**
+     * Формирует частотную таблицу символов заданного файла {@code path}
+     */
     public void hashFile(String path) throws IOException {
         Scanner in = new Scanner(Path.of(path));
         String text = "";
@@ -37,12 +54,23 @@ public class PriorityQ {
             text += in.nextLine() + unixNewRow; // unixNewRow для однобайтовой кодировки новой строки
         }
         filePath = path;
-        hash = new HashTable(101);
+        hashText = new HashTable(101);
         nElem = text.length();
         for(int j = 0; j < nElem; ++j) {
-            hash.inc(String.valueOf(text.charAt(j)));
+            hashText.inc(String.valueOf(text.charAt(j)));
         }
     }
+    /**
+     * Отображает частотную таблицу символов
+     */
+    public void displayHashText() {
+        System.out.println("........................................");
+        System.out.println("Хеш-таблица с символами текста hashText:");
+        hashText.displayHash();
+    }
+    /**
+     * Сохраняет в файле {@code fileName} ЗАкодированный текст
+     */
     public void encodeFile(String fileName, Charset charset) throws IOException {
         Scanner in = new Scanner(Path.of(filePath));
         String text = "";
@@ -51,16 +79,16 @@ public class PriorityQ {
         }
         PrintWriter out = new PrintWriter(fileName, charset);
         for(int j = 0; j < text.length(); ++j) {
-            out.print(hash.getCode(String.valueOf(text.charAt(j))));
+            out.print(hashText.getCode(String.valueOf(text.charAt(j))));
         }
         out.flush();
     }
-    public void displayHash() {
-        hash.displayHash();
-    }
-
+    /**
+     * Первичное заполнение приоритетной очереди деревьями с одним корневым узлом для каждого символа частотной таблицы символов.
+     * Заполнение происходит на основе хеш-таблицы, заполненной по ключу - символ и значением - частотность символа.
+     */
     public void setListTree() {
-        ListQ[] array = hash.getArray();
+        ListQ[] array = hashText.getArray();
         for(int j = 0; j < array.length; ++j) {
             if (array[j] != null) {
                 LinkQ current = array[j].getLinkQRoot();
@@ -73,6 +101,9 @@ public class PriorityQ {
             }
         }
     }
+    /**
+     * Формирование дерево Хаффмана после первичного заполнения приоритетной очереди {@code setListTree}
+     */
     public void setHuffmanTree() {
         while(list.getLength() > 1) {
             LinkT link1 = list.deleteRoot();
@@ -81,20 +112,23 @@ public class PriorityQ {
             list.insert(mrg);
         }
     }
-    public void displayList() {
+    /**
+     * Отображение дерево Хаффмана
+     */
+    public void displayHuffmanTree() {
         list.displayList();
     }
+    /**
+     * Формирование набор символов кодировки
+     */
     public void setCharset(NodeQ node, String code) {
         if(node == null) {
             return;
         }
         setCharset(node.getNodeLeftChild(), code + '0');
-        int hashValue = hash.hashFunc(node.getNodeSData());
-//        if(hash.array[hashValue] == null) {
-//            System.out.println("setCharset 84: " + node.getNodeSData());
-//        }
-        if(hash.array[hashValue] != null) {
-            LinkQ current = hash.array[hashValue].getLinkQRoot();
+        int hashValue = hashText.hashFunc(node.getNodeSData());
+        if(hashText.array[hashValue] != null) {
+            LinkQ current = hashText.array[hashValue].getLinkQRoot();
             while (current != null && current.getSData() != node.getNodeSData()) {
                 current = current.getNextChild();
             }
@@ -104,11 +138,14 @@ public class PriorityQ {
         }
         setCharset(node.getNodeRightChild(), code + '1');
     }
+    /**
+     * Сохранение набора символов кодировки в файле {@code fileName}
+     */
     public void saveCharsetToFile(String fileName, Charset charset) throws IOException {
         PrintWriter out = new PrintWriter(fileName, charset);
-        for(int j = 0; j < hash.getArraySize(); ++j) {
-            if(hash.array[j] != null) {
-                LinkQ current = hash.array[j].getLinkQRoot();
+        for(int j = 0; j < hashText.getArraySize(); ++j) {
+            if(hashText.array[j] != null) {
+                LinkQ current = hashText.array[j].getLinkQRoot();
                 while (current != null) {
                     out.println(current.getSData() + delimiter + current.getBCode());
                     current = current.getNextChild();
@@ -117,6 +154,9 @@ public class PriorityQ {
         }
         out.flush();
     }
+    /**
+     * Чтение из файла {@code fileName} набора символов кодировки
+     */
     public void loadCharsetFromFile(String fileName, Charset charset) throws IOException {
         Scanner in = new Scanner(Path.of(fileName));
         int size = 0;
@@ -130,9 +170,9 @@ public class PriorityQ {
         in = new Scanner(Path.of(fileName));
         while(in.hasNext()) {
             String text = in.nextLine();
-            // пустой символ при раскодировки считать символом новой строки
+            // пустой символ при раскодировании считать символом новой строки
             if(text.equals("")) {
-                // заменить его на символ новой строки, например, в формате Windows
+                // заменить его на реальный символ новой строки, например, в формате Windows
                 text += PriorityQ.windowsNewRow + in.nextLine();
             }
             String[] arr = text.split(delimiter);
@@ -146,8 +186,18 @@ public class PriorityQ {
                 }
             }
         }
-//        hashCharset.displayHash();
     }
+    /**
+     * Отображение набора символов кодировки
+     */
+    public void displayHashCharset() {
+        System.out.println(".....................................................");
+        System.out.println("Хеш-таблица с набором символов кодировки hashCharset:");
+        hashCharset.displayHash();
+    }
+    /**
+     * Чтение из файла {@code decodeFileName} ЗАкодированного текста и РАСкодирование его в файл {@code encodeFileName}
+     */
     public void decodeFile(String decodeFileName, String encodeFileName, Charset charset) throws IOException {
         Scanner in = new Scanner(Path.of(decodeFileName));
         String text = in.nextLine();

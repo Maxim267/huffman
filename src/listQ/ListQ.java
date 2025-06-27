@@ -1,9 +1,19 @@
 package listQ;
 
+/**
+ * Связанный список ListQ для хранения данных в хеш-таблице {@code HashTable}
+ */
 public class ListQ {
+    /**
+     * Корневой элемент {@code root} связанного списка
+     */
     private LinkQ root;
     private LinkQ lastNode;
     private int length;
+    /**
+     * Вид сортировки данных в списке {@code ListQ} соответствует сортировке по ключу в одноименных полях элемента списка {@code LinkQ}:
+     * {@code sData}, {@code iData}, {@code bData}
+     */
     public static enum sortedKeys {sData(), iData(), bData()};
     public ListQ() {
         root = null;
@@ -12,9 +22,15 @@ public class ListQ {
     public int getLength() {
         return length;
     }
+    /**
+     * Получение корневого элемента {@code root}
+     */
     public LinkQ getLinkQRoot() {
         return root;
     }
+    /**
+     * Отображение связанного списка
+     */
     public void displayList() {
         LinkQ temp = root;
         while(temp != null) {
@@ -36,15 +52,44 @@ public class ListQ {
         }
         length++;
     }
-    public boolean insertSData(String key) {
-        return insertSorted(1, key, null, true, sortedKeys.sData);
+    /**
+     * Добавление элемента в список со строковым ключом {@code key}
+     * и целочисленным значением {@code idt} с возможностью инкремента {@code isInc} для значения {@code idt}
+     */
+    public boolean insertSData(String key, int idt, boolean isInc) {
+        return insertSorted(idt, key, null, isInc, sortedKeys.sData);
     }
+    /**
+     * Добавление элемента в список со строковым ключом {@code code} и строковым значением {@code map}.
+     */
     public boolean insertBData(String code, String map) {
         return insertSorted(1, map, code, true, sortedKeys.bData);
     }
     public boolean insertIData(int key, String value) {
         return insertSorted(key, value, null, false, sortedKeys.iData);
     }
+    /**
+     * Добавление элемента в список.
+     * Три параметра: {@code idt}, {@code sdt}, {@code bdt} обрабатываются одновременно.
+     * В зависимости от применения только один из этих параметров является ключевым (с сортировкой по ключу), остальные два используются для значений.
+     * @param idt
+     *        Целочисленные ключевые данные для поля iData элемента списка {@code LinkQ}.
+     *        Не допускается дублирование значений.
+     *        Используется для частотности символов кодируемого списка
+     * @param sdt
+     *        Строковые ключевые данные для поля sData элемента списка {@code LinkQ}.
+     *        Не допускается дублирование значений.
+     *        Используется для строковых ключевых строк (или строковой кодировки символов)
+     * @param bdt
+     *        Строковые ключевые данные для поля bData элемента списка {@code LinkQ}.
+     *        Не допускается дублирование значений.
+     *        Используется для строковой кодировки символов (или строковых ключевых строк)
+     * @param isInc
+     *        Признак использования икремента +1 значения в поле iData элемента списка {@code LinkQ}
+     *        Используется только при добавлении целочисленных ключевых данных
+     * @param key
+     *        Вид сортировки элементов списка
+     */
     public boolean insertSorted(int idt, String sdt, String bdt, boolean isInc, sortedKeys key) {
         LinkQ current = root;
         LinkQ parent = null;
@@ -118,6 +163,9 @@ public class ListQ {
         length++;
         return true;
     }
+    /**
+     * Находит элемент {@code LinkQ} по заданному строковому ключу {@code key}
+     */
     public LinkQ find(String key) {
         LinkQ current = root;
         while(current != null && !current.getSData().equals(key)) {

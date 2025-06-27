@@ -1,5 +1,12 @@
 package listQ;
 
+/**
+ * Элемент {@code LinkQ} связанного списка {@code ListQ}
+ * содержит поля {@code iData}, {@code sData}, {@code bCode},
+ * которые в зависимости от использования
+ * могут быть ключевыми с сортировкой или для значений.
+ * Выбор ключа с сортировкой находится в ListQ.sortedKeys
+ */
 public class LinkQ {
     private int iData;
     private String sData;

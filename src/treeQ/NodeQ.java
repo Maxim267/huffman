@@ -1,7 +1,18 @@
 package treeQ;
 
+/**
+ * Узел {@code NodeQ} дерева {@code TreeQ}
+ */
 public class NodeQ {
+    /**
+     * Ключевое поле узла.
+     * Используется для частотности символов кодируемого текста
+     */
     private int iData;
+    /**
+     * Строковое значение узла.
+     * Используется для символа кодируемого текста
+     */
     private String sData;
     private boolean isMerge;
     private NodeQ leftChild;

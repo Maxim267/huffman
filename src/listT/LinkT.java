@@ -1,7 +1,12 @@
-package listTreeQ;
+package listT;
 
 import treeQ.TreeQ;
 
+/**
+ * Элемент {@code LinkT} связанного списка {@code ListT}
+ * содержит дерево {@code TreeQ} для использования в приоритетной очереди PriorityQ
+ * для формирования дерева Хаффмана
+ */
 public class LinkT {
     private TreeQ tree;
     private LinkT nextChild;

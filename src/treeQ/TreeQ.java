@@ -1,10 +1,16 @@
 package treeQ;
 
 import priorityQ.PriorityQ;
-
 import java.util.Stack;
 
+/**
+ * Дерево {@code TreeQ}
+ * используется для формирования дерева Хаффмана
+ */
 public class TreeQ {
+    /**
+     * Корневой узел {@code root}
+     */
     private NodeQ root;
     public TreeQ() {
         root = null;
@@ -18,12 +24,17 @@ public class TreeQ {
     public void setTreeRoot(NodeQ treeNode) {
         root = treeNode;
     }
+    /**
+     * Отображение дерева
+     */
     public void displayTree() {
         Stack<NodeQ> global = new Stack();
         global.push(root);
         int nBlanks = 64;
         boolean isRowEmpty = false;
         System.out.println("...................................................");
+        System.out.println("Дерево Хаффмана TreeQ:");
+        System.out.println("......................");
         while(isRowEmpty == false) {
             isRowEmpty = true;
             Stack<NodeQ> local = new Stack();
@@ -58,9 +69,16 @@ public class TreeQ {
         }
         System.out.println("...................................................");
     }
+    /**
+     * Добавление узла с целочисленным ключом {@code it} и строковым значением {@code st}
+     */
     public boolean insert(int it, String st) {
         return insert(it, st, false);
     }
+    /**
+     * Добавление узла с целочисленным ключом {@code it} и строковым значением {@code st}
+     * с признаком того, что данный узел получен из объединения двух {@code merge}
+     */
     public boolean insert(int it, String st, boolean merge) {
         NodeQ newNode = new NodeQ(it, st, merge);
         if(root == null) {

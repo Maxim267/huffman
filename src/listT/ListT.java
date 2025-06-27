@@ -1,7 +1,10 @@
-package listTreeQ;
+package listT;
 
 import treeQ.TreeQ;
 
+/**
+ * Связанный список {code ListT} для приоритетной очереди {code PriorityQ}
+ */
 public class ListT {
     private LinkT root;
     private LinkT lastNode;
@@ -23,6 +26,9 @@ public class ListT {
         }
 //        System.out.println();
     }
+    /**
+     * Добавить элемент в конец списка
+     */
     public void insert(LinkT link) {
         if(root == null) {
             root = link;
@@ -35,6 +41,9 @@ public class ListT {
         }
         length++;
     }
+    /**
+     * Добавить элемент в список с применением сортировки
+     */
     public void insertSorted(LinkT link) {
         if(root == null) {
             root = link;
@@ -62,6 +71,9 @@ public class ListT {
         }
         length++;
     }
+    /**
+     * Удалить элемент из начала списка
+     */
     public LinkT deleteRoot() {
         LinkT current = root;
         if(root == null) {
@@ -77,6 +89,9 @@ public class ListT {
         length--;
         return current;
     }
+    /**
+     * Получить новый объединенный элемент из двух заданных элементов списка
+     */
     public LinkT merge(LinkT left, LinkT right) {
         TreeQ mrg = new TreeQ();
         mrg.insert(left.getLinkTTree().getTreeRoot().getNodeIData() + right.getLinkTTree().getTreeRoot().getNodeIData(), "@", true);
