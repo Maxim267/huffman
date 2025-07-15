@@ -25,24 +25,36 @@ public class TreeQ {
         root = treeNode;
     }
     /**
-     * Отображение дерева
+     * Получить количество уровней дерева
+     */
+    private int getNLevelTree() {
+        NodeQ current = root;
+        int nLevel = 0;
+        while(current != null) {
+            nLevel++;
+            current = current.getNodeRightChild();
+        }
+        return nLevel;
+    }
+    /**
+     * Вывести дерево в стандартный поток вывода
      */
     public void displayTree() {
-        Stack<NodeQ> global = new Stack();
+        Stack<NodeQ> global = new Stack<>();
         global.push(root);
-        int nBlanks = 64;
+        int nLevel = getNLevelTree();
+        int nBlanks = (int) Math.pow(2, nLevel);
+        int len = 0;
         boolean isRowEmpty = false;
-        System.out.println("...................................................");
-        System.out.println("Дерево Хаффмана TreeQ:");
-        System.out.println("......................");
-        while(isRowEmpty == false) {
+        System.out.println("<<< Дерево Хаффмана TreeQ:");
+        while(!isRowEmpty) {
             isRowEmpty = true;
-            Stack<NodeQ> local = new Stack();
-            for (int j = 0; j < nBlanks - 2; ++j) {
+            Stack<NodeQ> local = new Stack<>();
+            for (int j = 0; j < nBlanks; ++j) {
                 System.out.print(" ");
             }
-            while(global.isEmpty() == false) {
-                NodeQ current = (NodeQ) global.pop();
+            while(!global.isEmpty()) {
+                NodeQ current = global.pop();
                 if (current != null) {
                     isRowEmpty = false;
                     local.push(current.getNodeLeftChild());
@@ -51,23 +63,25 @@ public class TreeQ {
                     if(sdt.equals(PriorityQ.unixNewRow)) {
                         sdt = "\\n";
                     }
-                    System.out.print(" " + current.getNodeIData() + sdt + " ");
+                    System.out.print(current.getNodeIData() + sdt);
+                    len = Integer.toString(current.getNodeIData()).length() + sdt.length();
                 } else {
                     local.push(null);
                     local.push(null);
-                    System.out.print(" -- ");
+                    System.out.print("--");
+                    len = 2;
                 }
-                for (int j = 0; j < nBlanks * 2 - 4; ++j) {
+                for (int j = 0; j < nBlanks * 2 - (len); ++j) {
                     System.out.print(" ");
                 }
             }
             nBlanks /= 2;
-            System.out.println("");
-            while (local.isEmpty() == false) {
+            System.out.println();
+            while (!local.isEmpty()) {
                 global.push(local.pop());
             }
         }
-        System.out.println("...................................................");
+        System.out.println(">>>");
     }
     /**
      * Добавление узла с целочисленным ключом {@code it} и строковым значением {@code st}
