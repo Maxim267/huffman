@@ -45,6 +45,27 @@ public class PriorityQ {
         return list;
     }
     /**
+     * Проверяет является ли заданное значение простым числом
+     */
+    private boolean isPrime(int value) {
+        for(int j = 2; j * j <= value; ++j) {
+            if(value % j == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * Возвращает первое простое число после заданного значения
+     */
+    private int getPrime(int min) {
+        for(int j = min + 1; true; ++j) {
+            if(isPrime(j)) {
+                return j;
+            }
+        }
+    }
+    /**
      * Формирует частотную таблицу символов заданного файла {@code path}
      */
     public void hashFile(String path) throws IOException {
@@ -54,7 +75,7 @@ public class PriorityQ {
             text += in.nextLine() + unixNewRow; // unixNewRow для однобайтовой кодировки новой строки
         }
         filePath = path;
-        hashText = new HashTable(101);
+        hashText = new HashTable(277);
         nElem = text.length();
         for(int j = 0; j < nElem; ++j) {
             hashText.inc(String.valueOf(text.charAt(j)));
@@ -164,7 +185,7 @@ public class PriorityQ {
             size++;
             in.nextLine();
         }
-        hashCharset = new HashTable(size * 2);
+        hashCharset = new HashTable(getPrime(size * 2));
         int hashValue = 0;
         nMinLengthCharset = 0;
         in = new Scanner(Path.of(fileName));
