@@ -20,11 +20,11 @@ public class PQueue<K  extends Comparable<K>, V> implements Output, IntOutput {
     private final AHeap<K, V> heap;
 
     /**
-     * Вывод приоритетной очереди как массив в поток.
+     * Поток вывода приоритетной очереди как массив.
      */
     public Display out;
     /**
-     * Вывод приоритетной очереди как дерево в поток.
+     * Поток вывода приоритетной очереди как дерево.
      */
     public IntDisplay outTree;
 
