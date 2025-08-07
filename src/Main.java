@@ -1,53 +1,35 @@
-import priorityQ.PriorityQ;
-import treeQ.NodeQ;
+import huffman.HfmProcess;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        // Создать приоритетную очередь
-        PriorityQ pQueue = new PriorityQ();
+        public static void main(String[] args)  throws IOException {
+                // HuffmanTree
+                HfmProcess huff = new HfmProcess();
 
-        // I часть. Закодировать текст по алгоритму Хаффмана
+                long start = System.nanoTime();
 
-        // Предварительно подготовить тестовый файл Test.txt с текстом, который необходимо закодировать
-        // Загрузить в хеш-таблицу все символы текста (ключ=символ; значение=количество символа в тексте)
-        pQueue.hashFile("Test.txt");
-        // Отобразить хеш-таблицу с символами текста
-        pQueue.displayHashText();
-        // Выполнить первое заполнение приоритетной очереди символами из хеш-таблицы
-        // где для каждого символа будет создано дерево с одним корневым узлом
-        pQueue.setListTree();
-        // Продолжить рекурсивно обрабатывать приоритетную очередь
-        // пока в очереди не останется одно дерево Хаффмана, где для каждого символа будет создан свой узел
-        pQueue.setHuffmanTree();
-        // Отобразить дерево Хаффмана
-        pQueue.displayHuffmanTree();
-        // Получить корневой узел дерева Хаффмана
-        NodeQ root = pQueue.getList().getLinkTRoot().getLinkTTree().getTreeRoot();
-        // Обойти все узлы дерева, начиная с корневого узла
-        // и заполнить хеш-таблицу с собственным набором символов кодировки по алгоритму Хаффмана
-        pQueue.setCharset(root, "");
-        // Задать имя файла, в котором будет сохранен закодированный текст
-        pQueue.encodeFile("EncodedText.txt", StandardCharsets.UTF_8);
-        // Задать имя файла, в котором будет сохранен собственный набор символов кодировки по алгоритму Хаффмана
-        pQueue.saveCharsetToFile("Charset.txt", StandardCharsets.UTF_8);
+                // I Кодировать текст по алгоритму Хаффмана
 
-        // II часть. Раскодировать текст, который был ранее закодирован по алгоритму Хаффмана
+                // sourceTextFile.txt - из этого файла читается исходный текст, который необходимо закодировать.
+                // huffmanCodeFile.txt - в этот файл записывается набор кодировки Хаффмана для всех символов текста файла sourceTextFile.txt
+                // encodedTextFile.txt - в этот файл записывается закодированный по Хаффману текст файла sourceTextFile.txt
+                huff.executeEncoding("sourceTextFile.txt", "huffmanCodeFile.txt", "encodedTextFile.txt");
 
-        // Задать имя файла, из которого в хеш-таблицу будет сохранен набор символов кодировки
-        pQueue.loadCharsetFromFile("Charset.txt", StandardCharsets.UTF_8);
-        // Отобразить хеш-таблицу с набором символов кодировки
-        // (ключ=код символа; значение=символ)
-        pQueue.displayHashCharset();
-        // Задать два имени файла:
-        // в первом ("EncodedText.txt") - хранится закодированный текст ,
-        // во втором ("DecodedText.txt") - куда будет раскодирован текст.
-        pQueue.decodeFile("EncodedText.txt", "DecodedText.txt", StandardCharsets.UTF_8);
+                long end = System.nanoTime();
+                System.out.println("Время кодирования текста: " + (end - start)/1_000_000 + " мс");
 
-        // Проверить результат работы:
-        // Сравнить два файла: "Test.txt" и "DecodedText.txt".
-        // Они должны быть одинаковыми.
-    }
+                // II Декодировать текст
+
+                long start2 = System.nanoTime();
+
+                // huffmanCodeFile.txt - из этого файла читается набор кодировки Хаффмана для всех символов текста файла (файл получен на I этапе).
+                // encodedTextFile.txt - из этого файла читается закодированный по Хаффману текст файла (файл получен на I этапе).
+                // decodedTextFile.txt - в этот файл записывается декодированный по Хаффману текст файла (файл должен быть аналогичен исходному sourceTextFile.txt)
+                huff.executeDecoding("huffmanCodeFile.txt", "encodedTextFile.txt", "decodedTextFile.txt");
+
+                long end2 = System.nanoTime();
+                System.out.println("Время декодирования текста: " + (end2 - start2)/1_000_000 + " мс");
+        }
+
 }
