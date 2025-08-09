@@ -10,13 +10,13 @@ import java.util.Stack;
 
 /**
  * Двоичное дерево поиска (Binary search tree, BST).
- * Элементы упорядочиваются с использованием их естественного порядка.
- * Уникальность элементов по ключу {@code K} поддерживается.
+ * Узлы упорядочены в соответствии с их естественным порядком ключей {@code K}.
+ * Уникальность узлов по ключу {@code K} поддерживается.
  * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этим деревом.
  * @param <V> тип соответствующих ключам данных.
  */
-public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
+public class BSTree<K extends Comparable<K>, V> implements IntOutput {
     /**
      * Корневой узел дерева.
      */
@@ -30,28 +30,18 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     /**
      * Поток вывода двоичного дерева поиска.
      */
-    public IntDisplay out;
+    public final IntDisplay out = new IntDisplay(this::display, "<<< BS tree: ", ">>>");
 
     /**
-     * Конструктор создает незаполненное двоичное дерево поиска.
+     * Создает пустое двоичное дерево поиска.
      */
     public BSTree() {
         root = null;
         size = 0;
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        String header = "<<< BS tree: ";
-        String footer = ">>>";
-        out = new IntDisplay(this::display, header, footer);
-    }
-
-    /**
-     * Получить корневой узел дерева.
+     * Получает корневой узел дерева.
      * @return корневой узел.
      */
     public BSNode<K, V> getRoot() {
@@ -59,7 +49,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Получить размер дерева.
+     * Получает размер дерева.
      * @return количество узлов дерева.
      */
     public int size() {
@@ -67,7 +57,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Добавить узел в дерево с данными.
+     * Добавляет узел в дерево с данными.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param key значение ключа узла.
      * @param value данные узла.
@@ -78,7 +68,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Добавить узел в дерево с данными.
+     * Добавляет узел в дерево с данными.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param key значение ключа узла дерева.
      * @param value данные узла дерева.
@@ -129,7 +119,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Добавить узел в дерево без данных.
+     * Добавляет узел в дерево без данных.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param key значение ключа.
      * @return добавленный узел.
@@ -139,7 +129,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Найти узел дерева по заданному ключу.
+     * Находит узел дерева по заданному ключу.
      * @param key значение ключа.
      * @return найденный узел.
      */
@@ -162,7 +152,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Найти узел дерева по заданному ключу с выводом результата поиска.
+     * Находит узел дерева по заданному ключу с выводом результата поиска.
      * @param key значение ключа узла.
      */
     public void findNodeExt(K key) {
@@ -184,7 +174,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Получить оценочную максимальную длину выводимого значения узлов дерева.
+     * Получает оценочную максимальную длину выводимого значения узлов дерева.
      * @return максимальную длину выводимого значения узлов.
      */
     public int getEstimateMaxValue() {
@@ -203,8 +193,8 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
     }
 
     /**
-     * Получить количество уровней дерева
-     * @return количество уровней дерева
+     * Получает количество уровней дерева.
+     * @return количество уровней дерева.
      */
     private int getNLevelTree() {
         BSNode<K, V> current = root;
@@ -221,7 +211,7 @@ public class BSTree<K  extends Comparable<K>, V> implements IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

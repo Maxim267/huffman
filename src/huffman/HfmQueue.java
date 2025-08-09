@@ -20,36 +20,22 @@ public class HfmQueue implements Output, IntOutput {
     /**
      * Поток вывода приоритетной очереди как массив.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Приоритетная очередь для формирования дерева Хаффмана (как массив): ", ">>>");
+
     /**
      * Поток вывода приоритетной очереди как дерево.
      */
-    public IntDisplay outTree;
+    public final IntDisplay outTree = new IntDisplay(this::display, "<<< Приоритетная очередь для формирования дерева Хаффмана (как дерево): ", ">>>");
 
     /**
-     * Конструктор создает незаполненную приоритетную очередь.
+     * Создает пустую приоритетную очередь для формирования дерева Хаффмана.
      */
     public HfmQueue() {
         queue = new PQueue<>();
-        setOutput();
     }
 
     /**
-     * Установить вывод в поток.
-     */
-    private void setOutput() {
-        // Вывод в поток приоритетной очереди как массив
-        String header = "<<< Приоритетная очередь для формирования дерева Хаффмана (как массив): ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-
-        // Вывод в поток приоритетной очереди как дерево
-        header = "<<< Приоритетная очередь для формирования дерева Хаффмана (как дерево): ";
-        outTree = new IntDisplay(this::display, header, footer);
-    }
-
-    /**
-     * Первичное заполнение приоритетной очереди деревьями.
+     * Первично заполняет приоритетную очередь деревьями.
      * Очередь заполняется деревьями с одним корневым узлом для каждого символа частотной таблицы символов.
      * Заполнение каждого корневого узла происходит парными значениями: ключ - это частотность символа; данные - это символ.
      * @param hashText предварительно заполненная частотная таблица символов на основе хеш-таблицы.
@@ -74,11 +60,11 @@ public class HfmQueue implements Output, IntOutput {
     }
 
     /**
-     * Объединить два заданных узла очереди.
+     * Объединяет два заданных узла очереди.
      * Новый объединенный узел содержит новое объединенное дерево Хаффмана, у которого корневой узел имеет потомков на основе заданных узлов.
-     * @param node1 первый узел
-     * @param node2 второй узел
-     * @return новый родительский узел с объединенным деревом Хаффмана
+     * @param node1 первый узел.
+     * @param node2 второй узел.
+     * @return новый родительский узел с объединенным деревом Хаффмана.
      */
     public ANode<Integer, HfmTree> mergeNodes(ANode<Integer, HfmTree> node1, ANode<Integer, HfmTree> node2) {
         HfmTree huffTree = new HfmTree();
@@ -93,7 +79,7 @@ public class HfmQueue implements Output, IntOutput {
     }
 
     /**
-     * Формировать дерево Хаффмана.
+     * Формирует дерево Хаффмана.
      * В результате в очереди остается единственный узел содержащий объединенное дерево Хаффмана.
      * @return дерево Хаффмана.
      */
@@ -113,9 +99,9 @@ public class HfmQueue implements Output, IntOutput {
     }
 
     /**
-     * Получить сформированное дерево Хаффмана.
-     * Дерево формируется после последовательного запуска {@code setPrimaryQueue} и {@code setHuffmanTree}
-     * @return дерево Хаффмана
+     * Получает сформированное дерево Хаффмана.
+     * Дерево формируется после последовательного запуска {@code setPrimaryQueue} и {@code setHuffmanTree}.
+     * @return дерево Хаффмана.
      */
     public HfmTree getHfmTree() {
         return queue.getFirstValue();
@@ -126,7 +112,7 @@ public class HfmQueue implements Output, IntOutput {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -137,7 +123,7 @@ public class HfmQueue implements Output, IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

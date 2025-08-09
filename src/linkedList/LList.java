@@ -6,12 +6,12 @@ import utils.output.Output;
 
 /**
  * Односвязный список с хвостовым указателем (Tail-Pointer Singly Linked List).
- * В зависимости от применяемых методов элементы упорядочиваются в естественном порядке (поддерживается уникальность) или в порядке вставки элементов (не поддерживается уникальность).
+ * В зависимости от применяемых методов элементы упорядочиваются в естественном порядке ключей (поддерживается уникальность ключей) или в порядке вставки элементов (не поддерживается уникальность).
  * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этим списком.
  * @param <V> тип соответствующих ключам данных.
  */
-public class LList<K  extends Comparable<K>, V> implements Output {
+public class LList<K extends Comparable<K>, V> implements Output {
     /**
      * Первый элемент списка.
      */
@@ -30,29 +30,19 @@ public class LList<K  extends Comparable<K>, V> implements Output {
     /**
      * Поток вывода односвязного списка в поток.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Linked List: ", ">>>");
 
     /**
-     * Конструктор создает новый связанный список.
+     * Создает пустой связанный список.
      */
     public LList() {
         first = null;
         last = null;
         size = 0;
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        String header = "<<< Linked List: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-    }
-
-    /**
-     * Получить размер списка.
+     * Получает размер списка.
      * @return количество элементов списка.
      */
     public int size() {
@@ -60,7 +50,7 @@ public class LList<K  extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить элемент списка по заданному ключу.
+     * Получает элемент списка по заданному ключу.
      * @param key заданный ключ.
      * @return элемент списка.
      */
@@ -73,7 +63,7 @@ public class LList<K  extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить первый элемент списка.
+     * Получает первый элемент списка.
      * @return первый элемент списка.
      */
     public LNode<K, V> getFirst() {
@@ -81,10 +71,10 @@ public class LList<K  extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Добавить элемент в конец списка.
+     * Добавляет элемент в конец списка.
      * Элементы упорядочиваются с использованием порядка вставки.
      * Уникальность элементов не поддерживается.
-     * @param node новый элемент
+     * @param node новый элемент.
      */
     public void add(LNode<K, V> node) {
         if(first == null) {
@@ -99,32 +89,32 @@ public class LList<K  extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Вставить элемент в список с инкрементальным изменением целочисленных данных {@code V} при совпадении ключа {@code K}.
+     * Вставляет элемент в список с инкрементальным изменением целочисленных данных {@code V} при совпадении ключа {@code K}.
      * Элементы упорядочиваются по ключу {@code K} с использованием естественного порядка.
      * Уникальность элементов по ключу {@code K} поддерживается.
-     * @param node новый элемент
+     * @param node новый элемент.
      */
     public void inc(LNode<K, V> node) {
         insert(node, true);
     }
 
     /**
-     * Вставить элемент в список с переписыванием данных {@code V} при совпадении ключа {@code K}.
+     * Вставляет элемент в список с переписыванием данных {@code V} при совпадении ключа {@code K}.
      * Элементы упорядочиваются по ключу {@code K} с использованием естественного порядка.
      * Уникальность элементов по ключу {@code K} поддерживается.
-     * @param node новый элемент
+     * @param node новый элемент.
      */
     public void insert(LNode<K, V> node) {
         insert(node, false);
     }
 
     /**
-     * Вставить элемент в список.
+     * Вставляет элемент в список.
      * Элементы упорядочиваются по ключу {@code K} с использованием естественного порядка.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param node новый элемент
-     * @param isInc признак инкремента для целочисленных данных {@code V}.
-     *              Если {@code isInc} = true, то целочисленные данные {@code V} увеличиваются на заданное значение.
+     * @param isInc признак инкремента для целочисленных данных {@code V}:
+     *              Если {@code isInc} = true, то целочисленные данные {@code V} увеличиваются на заданное значение;
      *              Если {@code isInc} = false, то данные {@code V} перезаписываются на заданное значение.
      */
     public void insert(LNode<K, V> node, boolean isInc) {
@@ -182,7 +172,7 @@ public class LList<K  extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

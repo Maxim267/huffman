@@ -31,27 +31,18 @@ public class HfmFrequency implements Output {
     /**
      * Поток вывода частотной таблицы символов.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Частотная таблица символов: ", ">>>");
 
     /**
-     * Конструктор создает незаполненную частотную таблицу символов.
+     * Создает пустую частотную таблицу символов.
      */
     public HfmFrequency() {
         freqTable = null;
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        String header = "<<< Частотная таблица символов: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-    }
-
-    /**
-     * Получить частотную таблицу символов.
-     * Таблица формируется при запуске {@code createFreqTable}
+     * Получает частотную таблицу символов.
+     * Таблица формируется при запуске {@code createFreqTable}.
      * @return хеш-таблица.
      */
     public LHash<String, Integer> getFreqTable() {
@@ -59,7 +50,7 @@ public class HfmFrequency implements Output {
     }
 
     /**
-     * Получить текст-источник.
+     * Получает текст-источник.
      * @return текст-источник.
      */
     public StringBuilder getSourceText() {
@@ -67,7 +58,7 @@ public class HfmFrequency implements Output {
     }
 
     /**
-     * Получить копию массива связанных списков частотной таблицы символов с преобразованием типов ключа и данных к типу String.
+     * Получает копию массива связанных списков частотной таблицы символов с преобразованием типов ключа и данных к типу String.
      * @return копия массива связанных списков хеш-таблицы с преобразованием типов ключа и данных к типу String.
      */
     public LList<String, String>[] getStringCopyHash() {
@@ -75,7 +66,7 @@ public class HfmFrequency implements Output {
     }
 
     /**
-     * Сформировать частотную таблицу символов.
+     * Формирует частотную таблицу символов.
      * @param path файл с кодируемым текстом.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
@@ -90,7 +81,7 @@ public class HfmFrequency implements Output {
                 sourceText.append(AppConstants.UNIX_NEW_ROW);
             }
         }
-        freqTable = new LHash<>(MathUtils.getPrime(AppConstants.HASH_SIZE));
+        freqTable = new LHash<>(AppConstants.HASH_SIZE);
         nElem = sourceText.length();
         for(int j = 0; j < nElem; ++j) {
             freqTable.inc(String.valueOf(sourceText.charAt(j)), 1);
@@ -101,7 +92,7 @@ public class HfmFrequency implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

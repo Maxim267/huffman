@@ -35,7 +35,7 @@ public class HfmProcess {
     private HfmCharset hfmCharset;
 
     /**
-     * Конструктор создает новый процесс обработки текста по алгоритму Хаффмана.
+     * Создает процесс обработки текста по алгоритму Хаффмана.
      */
     public HfmProcess() {
         hfmFrequency = new HfmFrequency();
@@ -43,7 +43,7 @@ public class HfmProcess {
     }
 
     /**
-     * Запустить процесс кодирования файла с исходным текстом по алгоритму Хаффмана.
+     * Запускает процесс кодирования файла с исходным текстом по алгоритму Хаффмана.
      * @param sourceTextFile из этого файла читается исходный текст, который необходимо закодировать по алгоритму Хаффмана.
      * @param huffmanCodeFile в этот файл записывается набор кодировки Хаффмана для всех символов исходного текста.
      * @param encodedTextFile в этот файл записывается закодированный по Хаффману текст.
@@ -54,7 +54,7 @@ public class HfmProcess {
     }
 
     /**
-     * Запустить процесс кодирования файла с исходным текстом по алгоритму Хаффмана.
+     * Запускает процесс кодирования файла с исходным текстом по алгоритму Хаффмана.
      * @param sourceTextFile из этого файла читается исходный текст, который необходимо закодировать по алгоритму Хаффмана.
      * @param huffmanCodeFile в этот файл записывается набор кодировки Хаффмана для всех символов исходного текста.
      * @param encodedTextFile в этот файл записывается закодированный по Хаффману текст.
@@ -64,7 +64,7 @@ public class HfmProcess {
     public void executeEncoding(String sourceTextFile, String huffmanCodeFile, String encodedTextFile, Charset charset) throws IOException {
         // 1. Формирование частотной таблицы
         hfmFrequency.createFreqTable(sourceTextFile, charset);
-//        hfmFrequency.displayHfmFreqTable(); // вывести частотную таблицу
+//        hfmFrequency.out.display(); // вывести частотную таблицу
 
         // 2. Первичное заполнение очереди
         hfmQueue.setPrimaryQueue(hfmFrequency.getFreqTable());
@@ -88,9 +88,9 @@ public class HfmProcess {
     }
 
     /**
-     * Записать в файл закодированный текст по Хаффману.
+     * Записывает в файл закодированный текст по Хаффману.
      * @param sourceText исходный текст, который необходимо закодировать.
-     * @param encodedTextFile в этот файл записывается закодированный по Хаффману текст файла {@code sourceTextFile}
+     * @param encodedTextFile в этот файл записывается закодированный по Хаффману текст.
      * @param charset имя стандартной кодировки символов файлов, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -103,10 +103,10 @@ public class HfmProcess {
     }
 
     /**
-     * Запустить процесс Декодирования текстового файла.
+     * Запускает процесс Декодирования текстового файла.
      * @param huffmanCodeFile из этого файла читается набор кодировки Хаффмана для всех символов текста (файл получен в {@code executeEncoding}).
      * @param encodedTextFile из этого файла читается закодированный по Хаффману текст (файл получен в {@code executeEncoding}).
-     * @param decodedTextFile в этот файл записывается декодированный {@code sourceTextFile}
+     * @param decodedTextFile в этот файл записывается декодированный текст.
      * @param charset имя стандартной кодировки символов файлов, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -116,16 +116,17 @@ public class HfmProcess {
         }
         // Прочитать набор кодировки Хаффмана из файла
         hfmCharset.readCharsetFromFile(huffmanCodeFile, charset);
-//        hfmCharset.displayCharset(); // вывести набор символов кодировки Хаффмана
+//        hfmCharset.out.display(); // вывести набор символов кодировки Хаффмана
 
+        // Записать в файл decodedTextFile декодированный текст
         writeDecodedTextToFile(encodedTextFile, decodedTextFile, charset);
     }
 
     /**
-     * Запустить процесс Декодирования текстового файла.
+     * Запускает процесс Декодирования текстового файла.
      * @param huffmanCodeFile из этого файла читается набор кодировки Хаффмана для всех символов текста (файл получен в {@code executeEncoding}).
      * @param encodedTextFile из этого файла читается закодированный по Хаффману текст (файл получен в {@code executeEncoding}).
-     * @param decodedTextFile в этот файл записывается декодированный {@code sourceTextFile}
+     * @param decodedTextFile в этот файл записывается декодированный текст.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
     public void executeDecoding(String huffmanCodeFile, String encodedTextFile, String decodedTextFile) throws IOException {
@@ -133,7 +134,7 @@ public class HfmProcess {
     }
 
     /**
-     * Записать декодированный текст в файл.
+     * Записывает декодированный текст в файл.
      * @param encodeFileName из этого файла читается закодированный по Хаффману текст.
      * @param decodeFileName в этот файл записывается декодированный текст.
      * @param charset имя стандартной кодировки символов файлов, например, StandardCharsets.UTF_8.

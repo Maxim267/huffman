@@ -42,51 +42,35 @@ public class HfmCharset implements Output {
     /**
      * Поток вывода хеш-таблицы с набором символов кодировки Хаффмана.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Huffman charset with hash: ", ">>>");
 
     /**
      * Поток вывода набора символов кодировки Хаффмана.
      */
-    public Display outHuffman;
+    public final Display outHuffman = new Display(this::displayHuffman, "<<< Набор кодировки Хаффмана: ", ">>>");
 
     /**
-     * Конструктор создает незаполненный набор символов кодировки Хаффмана.
+     * Создает пустой набор символов кодировки Хаффмана.
      */
     public HfmCharset() {
-        this.hash = new LHash<>(MathUtils.getPrime(AppConstants.HASH_SIZE));
+        this.hash = new LHash<>(AppConstants.HASH_SIZE);
         this.root = null;
-        setOutput();
     }
 
     /**
-     * Конструктор создает новый набор символов кодировки Хаффмана заполненный на основе дерева Хаффмана.
+     * Создает новый набор символов кодировки Хаффмана заполненный на основе заданного дерева Хаффмана.
      * @param tree дерево Хаффмана.
      */
     public HfmCharset(HfmTree tree) {
-        hash = new LHash<>(MathUtils.getPrime(AppConstants.HASH_SIZE));
+        hash = new LHash<>(AppConstants.HASH_SIZE);
         if(tree != null) {
             root = tree.getHfmTreeRoot();
             setCharset(root, "0");
         }
-        setOutput();
     }
 
     /**
-     * Установить вывод в поток.
-     */
-    private void setOutput() {
-        // Вывод хеш-таблицы с набором кодировки Хаффмана
-        String header = "<<< Huffman charset with hash: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-
-        // Вывод набора кодировки Хаффмана (без хеш-таблицы)
-        header = "<<< Набор кодировки Хаффмана: ";
-        outHuffman = new Display(this::displayHuffman, header, footer);
-    }
-
-    /**
-     * Рекурсивное формирование набора символов кодировки Хаффмана.
+     * Рекурсивно формирует набор символов кодировки Хаффмана.
      * Формирование начинается с корневого узла дерева Хаффмана.
      * @param node текущий узел дерева.
      * @param code текущий формируемый код Хаффмана.
@@ -107,7 +91,7 @@ public class HfmCharset implements Output {
     }
 
     /**
-     * Получить кеш-таблицу с набором символов кодировки Хаффмана.
+     * Получает кеш-таблицу с набором символов кодировки Хаффмана.
      * @return хеш-таблицу.
      */
     public LHash<String, String> getHash() {
@@ -115,7 +99,7 @@ public class HfmCharset implements Output {
     }
 
     /**
-     * Получить минимальную длину выводимого значения кода Хаффмана.
+     * Получает минимальную длину выводимого значения кода Хаффмана.
      * @return целочисленное значение.
      */
     public int getMinOffset() {
@@ -123,7 +107,7 @@ public class HfmCharset implements Output {
     }
 
     /**
-     * Получить максимальную длину выводимого значения кода Хаффмана.
+     * Получает максимальную длину выводимого значения кода Хаффмана.
      * @return целочисленное значение.
      */
     public int getMaxOffset() {
@@ -131,7 +115,7 @@ public class HfmCharset implements Output {
     }
 
     /**
-     * Прочитать набор символов кодировки Хаффмана из файла.
+     * Читает набор символов кодировки Хаффмана из файла.
      * @param fileName имя файла из которого читается набор символов кодировки Хаффмана.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
@@ -144,7 +128,7 @@ public class HfmCharset implements Output {
             size++;
             in.nextLine();
         }
-        hash = new LHash<>(MathUtils.getPrime(AppConstants.HASH_SIZE));
+        hash = new LHash<>(AppConstants.HASH_SIZE);
         minOffset = 0;
         maxOffset = 0;
         in = new Scanner(Path.of(fileName));
@@ -176,7 +160,7 @@ public class HfmCharset implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -186,13 +170,13 @@ public class HfmCharset implements Output {
     }
 
     /**
-     * Вывести набор символов кодировки Хаффмана в заданный поток вывода.
+     * Выводит набор символов кодировки Хаффмана в заданный выходной поток.
      * @param out заданный поток вывода:
-     *            - стандартный поток вывода (консоль) (использовать конструктор DualOutput())
-     *            - файл (использовать конструктор DualOutput(String fileName))
+     *            - стандартный выходной поток (консоль) (использовать конструктор DualOutput());
+     *            - вывод в файл (использовать конструктор DualOutput(String fileName)).
      */
     public void displayHuffman(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

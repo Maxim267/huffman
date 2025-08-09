@@ -7,23 +7,23 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 /**
- * Выбор выходного потока записи строкового сообщения.
+ * Выбор потока вывода.
  */
 public class DualOutput extends OutputDecorator implements AutoCloseable {
     /**
-     * Стандартный выходной поток записи.
+     * Стандартный выходной поток (консоль).
      */
     private PrintStream console;
 
     /**
-     * Выходной поток записи в файл.
+     * Поток вывода в файл.
      */
     private PrintWriter fileWriter;
 
     /**
-     * Признак выбора выходного потока записи:
-     *      true: выходной поток записи в файл
-     *      false: стандартный выходной поток записи
+     * Выбор потока вывода:
+     *      true: поток вывода в файл;
+     *      false: стандартный выходной поток (консоль).
      */
     private final boolean useFile;
 
@@ -47,7 +47,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     private boolean isFooterEmpty;
 
     /**
-     * Конструктор создает новый выбор стандартного выходного потока записи.
+     * Создает стандартный выходной поток (консоль).
      */
     public DualOutput() {
         useFile = false;
@@ -55,8 +55,8 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Конструктор создает новый выбор выходного потока записи в файл.
-     * @param fileName имя файла для записи строкового сообщения
+     * Создает поток вывода в файл.
+     * @param fileName имя файла для вывода строкового сообщения.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -66,7 +66,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Установить верхнее сообщение.
+     * Устанавливает верхнее сообщение.
      * @param str строковое сообщение.
      */
     public void setHeader(String str) {
@@ -75,7 +75,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получить верхнее сообщение.
+     * Получает верхнее сообщение.
      * @return верхнее сообщение.
      */
     public String getHeader() {
@@ -83,7 +83,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получить верхнее сообщение единожды.
+     * Получает верхнее сообщение один раз.
      * Используется в цепочке вложенных объектов при выводе сообщения в поток.
      * Инициирующий объект выводит свое сообщение и сбрасывает его в пробел.
      * Остальные потомки выводят этот пробел вместо своего сообщения.
@@ -100,7 +100,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Установить нижнее сообщение.
+     * Устанавливает нижнее сообщение.
      * @param str нижнее сообщение.
      */
     public void setFooter(String str) {
@@ -109,7 +109,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получить нижнее сообщение.
+     * Получает нижнее сообщение.
      * @return нижнее сообщение.
      */
     public String getFooter() {
@@ -117,7 +117,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получить нижнее сообщение единожды.
+     * Получает нижнее сообщение один раз.
      * Используется в цепочке вложенных объектов при выводе сообщения в поток.
      * Инициирующий объект выводит свое сообщение и сбрасывает его в пробел.
      * Остальные потомки выводят этот пробел вместо своего сообщения.

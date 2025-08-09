@@ -7,7 +7,7 @@ import utils.output.Output;
 import java.util.Objects;
 
 /**
- * Элемент кучи на массиве (Array element)
+ * Элемент кучи на массиве (Array element).
  * @param <K> тип ключей, поддерживаемых этим элементом кучи.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -25,45 +25,33 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     /**
      * Поток вывода элемента.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<<Array element: ", ">>>");;
 
     /**
-     * Конструктор создает новый элемент без данных.
-     * @param key значение ключа элемента.
-     */
-    public ANode(K key) {
-        this.key = Objects.requireNonNull(key, "Значение ключа не должно быть null");
-        this.value = null;
-        setOutput();
-    }
-
-    /**
-     * Конструктор создает новый элемент с данными.
+     * Создает элемент с заданными ключом и данными.
      * @param key значение ключа элемента.
      * @param value данные элемента.
      */
     public ANode(K key, V value) {
         this.key = Objects.requireNonNull(key, "Значение ключа не должно быть null");
         this.value = value;
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
+     * Создает элемент с заданным ключом (с пустыми данными).
+     * @param key значение ключа элемента.
      */
-    private void setOutput() {
-        String header = "<<<Array element: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
+    public ANode(K key) {
+        this(key, null);
     }
 
     /**
-     * Сравнить текущий и заданный элементы.
+     * Сравнивает текущий и заданный элементы.
      * Обеспечивает естественный порядок элементов в куче.
      * @param other значение заданного элемента.
      * @return результат сравнения элементов:
-     *         -1 - текущий элемент меньше заданного элемента,
-     *          0 - элементы равны,
+     *         -1 - текущий элемент меньше заданного элемента;
+     *          0 - элементы равны;
      *          1 - текущий элемент больше заданного элемента.
      */
     public int compareToOther(ANode<K, V> other) {
@@ -71,7 +59,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить заданное значение ключа элемента.
+     * Устанавливает заданное значение ключа элемента.
      * @param key заданное значение ключа.
      */
     public void setKey(K key) {
@@ -79,7 +67,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить значение ключа элемента.
+     * Получает значение ключа элемента.
      * @return значение ключа.
      */
     public K getKey() {
@@ -87,7 +75,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить данные элемента.
+     * Получает данные элемента.
      * @return данные элемента.
      */
     public V getValue() {
@@ -104,7 +92,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

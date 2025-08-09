@@ -40,21 +40,20 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     /**
      * Поток вывода узла.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<<Tree node: ", ">>>");
 
     /**
-     * Конструктор создает новый узел с заданным значением ключа без данных.
+     * Создает узел с заданным значением ключа (без данных).
      * @param key значение ключа.
      */
     public BSNode(K key) {
         this.key = Objects.requireNonNull(key, "Значение ключа не должно быть null");
         this.value = null;
         this.isMerge = false;
-        setOutput();
     }
 
     /**
-     * Конструктор создает новый узел с заданными значением ключа и данными.
+     * Создает узел с заданными значением ключа и данными.
      * @param key значение ключа узла.
      * @param value данные узла.
      */
@@ -62,25 +61,15 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
         this.key = Objects.requireNonNull(key, "Значение ключа не должно быть null");
         this.value = value;
         this.isMerge = false;
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        String header = "<<<Tree node: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-    }
-
-    /**
-     * Сравнить текущий и заданный узлы.
+     * Сравнивает текущий и заданный узлы.
      * Обеспечивает естественный порядок узлов в дереве.
      * @param other заданный узел.
      * @return значение сравнения узлов:
-     *         -1 - текущий узел меньше заданного узла,
-     *          0 - узлы равны,
+     *         -1 - текущий узел меньше заданного узла;
+     *          0 - узлы равны;
      *          1 - текущий узел больше заданного узла.
      */
     public int compareToOther(BSNode<K, V> other) {
@@ -88,12 +77,12 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Сравнить значения ключа текущего узла и заданного ключа.
+     * Сравнивает значения ключа текущего узла и заданного ключа.
      * Обеспечивает естественный порядок узлов в дереве.
      * @param other заданное значение ключа
      * @return значение сравнения ключей:
-     *         -1 - текущий ключ меньше заданного ключа,
-     *          0 - ключи равны,
+     *         -1 - текущий ключ меньше заданного ключа;
+     *          0 - ключи равны;
      *          1 - текущий ключ больше заданного ключа.
      */
     public int compareToOther(K other) {
@@ -101,7 +90,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить значение ключа узла.
+     * Устанавливает значение ключа узла.
      * @param key значение ключа узла.
      */
     public void setKey(K key) {
@@ -109,7 +98,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить значение ключа узла.
+     * Получает значение ключа узла.
      * @return значение ключа узла.
      */
     public K getKey() {
@@ -117,7 +106,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить данные узла.
+     * Получает данные узла.
      * @return данные узла.
      */
     public V getValue() {
@@ -125,7 +114,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить данные узла.
+     * Устанавливает данные узла.
      * @param value данные узла.
      */
     public void setValue(V value) {
@@ -133,7 +122,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить признак объединенного узла.
+     * Устанавливает признак объединенного узла.
      * @param isMerge значение признака объединенного узла.
      */
     public void setIsMerge(boolean isMerge) {
@@ -141,7 +130,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить значение признака объединенного узла.
+     * Получает значение признака объединенного узла.
      * @return значение признака объединенного узла.
      */
     public boolean getIsMerge() {
@@ -149,7 +138,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить ссылку на левый дочерний узел.
+     * Получает ссылку на левый дочерний узел.
      * @return узел.
      */
     public BSNode<K, V> getLeftChild() {
@@ -157,7 +146,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить левый дочерний узел.
+     * Устанавливает левый дочерний узел.
      * @param left узел.
      */
     public void setLeftChild(BSNode<K, V> left) {
@@ -165,7 +154,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Получить ссылку на правый дочерний узел.
+     * Получает ссылку на правый дочерний узел.
      * @return узел.
      */
     public BSNode<K, V> getRightChild() {
@@ -173,7 +162,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
     }
 
     /**
-     * Установить правый дочерний узел.
+     * Устанавливает правый дочерний узел.
      * @param right узел.
      */
     public void setRightChild(BSNode<K, V> right) {
@@ -190,7 +179,7 @@ public class BSNode<K extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

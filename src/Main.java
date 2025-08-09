@@ -3,7 +3,8 @@ import huffman.HfmProcess;
 import java.io.IOException;
 
 public class Main {
-        public static void main(String[] args)  throws IOException {
+        public static void main(String[] args) throws IOException {
+
                 // HuffmanTree
                 HfmProcess huff = new HfmProcess();
 
@@ -17,7 +18,7 @@ public class Main {
                 huff.executeEncoding("sourceTextFile.txt", "huffmanCodeFile.txt", "encodedTextFile.txt");
 
                 long end = System.nanoTime();
-                System.out.println("Время кодирования текста: " + (end - start)/1_000_000 + " мс");
+                System.out.println("Время кодирования текста: " + (end - start) / 1_000_000 + " мс");
 
                 // II Декодировать текст
 
@@ -29,7 +30,6 @@ public class Main {
                 huff.executeDecoding("huffmanCodeFile.txt", "encodedTextFile.txt", "decodedTextFile.txt");
 
                 long end2 = System.nanoTime();
-                System.out.println("Время декодирования текста: " + (end2 - start2)/1_000_000 + " мс");
+                System.out.println("Время декодирования текста: " + (end2 - start2) / 1_000_000 + " мс");
         }
-
 }

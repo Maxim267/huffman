@@ -6,19 +6,19 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * Вывод в поток {@code DualOutput}.
+ * Поток вывода {@code DualOutput}.
  */
 public class Display extends BaseDisplay {
     /**
-     * Интерфейс вывода в поток.
+     * Интерфейс потока вывода.
      */
     private final Output output;
 
     /**
-     * Конструктор создает новый вывод в поток.
-     * @param output метод вывода в поток.
-     * @param header верхнее сообщение вывода.
-     * @param footer нижнее сообщение вывода.
+     * Создает поток вывода.
+     * @param output поток вывода.
+     * @param header верхнее сообщение потока вывода.
+     * @param footer нижнее сообщение потока вывода.
      */
     public Display(Output output, String header, String footer) {
         super(header, footer);
@@ -28,7 +28,7 @@ public class Display extends BaseDisplay {
     }
 
     /**
-     * Вывести в стандартный поток (консоль).
+     * Выводит в стандартный выходной поток (консоль).
      */
     public void display() {
         try(DualOutput out = new DualOutput()) {
@@ -39,8 +39,8 @@ public class Display extends BaseDisplay {
     }
 
     /**
-     * Вывести в файл.
-     * @param fileName имя файла
+     * Выводит в файл.
+     * @param fileName имя файла.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -53,8 +53,8 @@ public class Display extends BaseDisplay {
     }
 
     /**
-     * Вывести в файл.
-     * @param fileName имя файла
+     * Выводит в файл.
+     * @param fileName имя файла.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
     public void display(String fileName) throws IOException {

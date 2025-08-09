@@ -2,6 +2,7 @@ package hashTable;
 
 import linkedList.LList;
 import linkedList.LNode;
+import utils.calculations.MathUtils;
 import utils.output.Display;
 import utils.output.DualOutput;
 import utils.output.Output;
@@ -13,16 +14,17 @@ import java.util.Arrays;
  * с разрешением коллизий по методу цепочек (Chaining) с использованием связанного списка.
  * Уникальность элементов связанного списка по ключу {@code K} поддерживается.
  * Отображает диапазон значений ключа на диапазон значений индекса с помощью хеш-функции.
- * Элементы в связанном списке упорядочиваются с использованием их естественного порядка.
+ * Элементы в связанном списке упорядочены в соответствии с их естественным порядком ключей {@code K}.
  * Тип параметров:
  * @param <K> тип ключей, поддерживаемых связанным списком.
  * @param <V> тип соответствующих ключам данных.
  */
-public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
+public class LHash<K extends Comparable<K>, V> implements Output, HashFunc<K> {
     /**
      * Массив связанных списков.
      */
-    private LList<K, V>[] array;
+//    private LList<K, V>[] array;
+    private final LList<K, V>[] array;
 
     /**
      * Размер хеш-таблицы.
@@ -32,24 +34,24 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
     /**
      * Поток вывода Хеш-таблицы.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Hash Table: ", ">>>");
 
     /**
-     * Конструктор создает незаполненную хеш-таблицу.
+     * Создает пустую хеш-таблицу с заданным размером.
+     * Если величина размера не является простым числом, то она автоматически увеличится до ближайшего простого числа.
      * @param size размер хеш-таблицы.
      */
     public LHash(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("Размер хеш-таблицы должен быть больше 0.");
         }
-        this.size = size;
-        this.array = new LList[size];
-        setOutput();
+        this.size = MathUtils.getPrime(size);
+        this.array = new LList[this.size];
     }
 
     /**
-     * Конструктор создает новую хеш-таблицу на основе массива связанных списков.
-     * @param array массив списков
+     * Создает новую хеш-таблицу на основе заданного массива связанных списков.
+     * @param array массив списков.
      */
     public LHash(LList<K, V>[] array) {
         if (array.length == 0) {
@@ -57,20 +59,10 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
         }
         this.size = array.length;
         this.array = Arrays.copyOf(array, array.length);
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        String header = "<<< Hash Table: ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-    }
-
-    /**
-     * Получить размер хеш-таблицы.
+     * Получает размер хеш-таблицы.
      * @return размер хеш-таблицы.
      */
     public int getSize() {
@@ -78,11 +70,11 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
     }
 
     /**
-     * Получить хеш-таблицу.
+     * Получает хеш-таблицу.
      * @return хеш-таблицу.
      */
     public LList<K, V>[] getHash() {
-        return  array;
+        return array;
     }
 
     @Override
@@ -97,7 +89,7 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
     }
 
     /**
-     * Инкрементировать целочисленные данные (счетчик) для заданного ключа элемента кеш-таблицы.
+     * Инкрементирует целочисленные данные (счетчик) для заданного ключа элемента кеш-таблицы.
      * Для нецелочисленных данных инкремент игнорируется и данные при повторе ключа не меняются.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param key ключ элемента.
@@ -112,7 +104,7 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
     }
 
     /**
-     * Поместить заданные ключ и данные элемента в хеш-таблицу.
+     * Помещает заданные ключ и данные элемента в хеш-таблицу.
      * Данные при повторе ключа переписываются.
      * Уникальность элементов по ключу {@code K} поддерживается.
      * @param key ключ элемента хеш-таблицы.
@@ -127,7 +119,7 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
     }
 
     /**
-     * Получить данные по заданному ключу элемента хеш-таблицы.
+     * Получает данные по заданному ключу элемента хеш-таблицы.
      * @param key ключ элемента хеш-таблицы.
      * @return данные элемента хеш-таблицы.
      */
@@ -179,7 +171,7 @@ public class LHash<K  extends Comparable<K>, V> implements Output, HashFunc<K> {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

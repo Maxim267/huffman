@@ -7,10 +7,11 @@ import utils.output.*;
 import java.util.Arrays;
 
 /**
- * Неограниченная приоритетная куча основанная на массиве (Array-based heap).
- * Куча поддерживает два типа: Min-Heap - минимальный элемент всегда в корне;
- *                             Max-Heap - максимальный элемент всегда в корне (по умолчанию).
- * Элементы упорядочиваются с использованием их естественного порядка.
+ * Неограниченная приоритетная куча на основе массива (Array-based heap).
+ * Куча поддерживает два типа:
+ *          Max-Heap - максимальный элемент всегда в корне (по умолчанию);
+ *          Min-Heap - минимальный элемент всегда в корне;
+ * Элементы упорядочены в соответствии с их естественным порядком ключей {@code K}.
  * Уникальность элементов не поддерживается.
  * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этой кучей.
@@ -35,7 +36,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
 
     /**
      * Тип кучи:
-     *     true: тип Max-Heap (максимальный элемент всегда в корне),
+     *     true: тип Max-Heap (максимальный элемент всегда в корне);
      *     false: тип Min-Heap (минимальный элемент всегда в корне).
      */
     private final boolean isMaxHeap;
@@ -48,28 +49,27 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     /**
      * Поток вывода приоритетной кучи как массив.
      */
-    public Display out;
+    public final Display out = new Display(this::display, "<<< Array-based heap (as array): ", ">>>");
 
     /**
      * Поток вывода приоритетной кучи как дерево.
      */
-    public IntDisplay outTree;
+    public final IntDisplay outTree = new IntDisplay(this::display, "<<< Array-based heap (as tree): ", ">>>");
 
     /**
-     * Конструктор создает новую незаполненную кучу с типом Max-Heap.
+     * Создает пустую кучу с типом Max-Heap.
      */
     public AHeap() {
         this.maxSize = initCapacity;
         this.currentSize = 0;
         this.array = new ANode[maxSize];
         this.isMaxHeap = true;
-        setOutput();
     }
 
     /**
-     * Конструктор создает новую незаполненную кучу с заданным типом.
-     * @param isMaxHeap признак типа кучи:
-     *        true: куча типа max-Heap (максимальный элемент всегда в корне),
+     * Создает пустую кучу с заданным типом max-Heap или min-Heap.
+     * @param isMaxHeap тип кучи:
+     *        true: куча типа max-Heap (максимальный элемент всегда в корне);
      *        false: куча типа min-Heap (минимальный элемент всегда в корне).
      */
     public AHeap(boolean isMaxHeap) {
@@ -77,25 +77,10 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
         this.currentSize = 0;
         this.array = new ANode[maxSize];
         this.isMaxHeap = isMaxHeap;
-        setOutput();
     }
 
     /**
-     * Установить потоки вывода.
-     */
-    private void setOutput() {
-        // Вывод в поток приоритетной кучи как массив
-        String header = "<<< Array-based heap (as array): ";
-        String footer = ">>>";
-        out = new Display(this::display, header, footer);
-
-        // Вывод в поток приоритетной кучи как дерево
-        header = "<<< Array-based heap (as tree): ";
-        outTree = new IntDisplay(this::display, header, footer);
-    }
-
-    /**
-     * Получить элемент кучи.
+     * Получает элемент кучи.
      * @param index индекс элемента кучи.
      * @return элемент кучи.
      */
@@ -104,7 +89,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Получить размер кучи.
+     * Получает размер кучи.
      * @return размер кучи.
      */
     public int size() {
@@ -112,7 +97,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Получить оценочную максимальную длину выводимого значения элементов кучи.
+     * Получает оценочную максимальную длину выводимого значения элементов кучи.
      * @return максимальная длина выводимого значения элементов.
      */
     private int getEstimateMaxValue() {
@@ -132,7 +117,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Вставить элемент в кучу с заданным ключом без данных.
+     * Вставляет элемент в кучу с заданным ключом без данных.
      * Уникальность элементов не поддерживается.
      * @param key ключ элемента.
      */
@@ -141,7 +126,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Вставить элемент в кучу с заданными ключом и данными.
+     * Вставляет элемент в кучу с заданными ключом и данными.
      * Уникальность элементов не поддерживается.
      * @param key ключ элемента.
      * @param value данные элемента.
@@ -156,7 +141,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Изменить размер кучи.
+     * Изменяет размер кучи.
      * @param newCapacity новый размер кучи.
      */
     private void resize(int newCapacity) {
@@ -167,7 +152,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Поднять вверх элемент в куче с учетом его приоритета.
+     * Поднимает вверх элемент в куче с учетом его приоритета.
      * @param index индекс элемента.
      */
     private void moveUp(int index)  {
@@ -188,7 +173,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Удалить элемент из кучи.
+     * Удаляет элемент из кучи.
      * Удаляется самый первый элемент.
      * Последний элемент занимает его место и сдвигается вниз с учетом его приоритета.
      * @return удаленный элемент.
@@ -204,7 +189,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     }
 
     /**
-     * Опустить вниз элемент в куче с учетом его приоритета.
+     * Опускает вниз элемент в куче с учетом его приоритета.
      * @param index индекс элемента.
      */
     private void moveDown(int index) {
@@ -237,7 +222,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -252,7 +237,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

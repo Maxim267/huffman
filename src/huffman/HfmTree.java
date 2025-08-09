@@ -16,28 +16,17 @@ public class HfmTree implements IntOutput {
     /**
      * Поток вывода дерева Хаффмана.
      */
-    public IntDisplay out;
+    public final IntDisplay out = new IntDisplay(this::display, "<<< Дерево Хаффмана: ", ">>>");
 
     /**
-     * Конструктор создает незаполненное дерево Хаффмана.
+     * Создает пустое дерево Хаффмана.
      */
     public HfmTree() {
         tree = new BSTree<>();
-        setOutput();
     }
 
     /**
-     * Установить поток вывода.
-     */
-    private void setOutput() {
-        // Вывод в поток приоритетной очереди как массив
-        String header = "<<< Дерево Хаффмана: ";
-        String footer = ">>>";
-        out = new IntDisplay(this::display, header, footer);
-    }
-
-    /**
-     * Получить корневой узел дерева Хаффмана.
+     * Получает корневой узел дерева Хаффмана.
      * @return корневой узел дерева Хаффмана.
      */
     public BSNode<Integer, String> getHfmTreeRoot() {
@@ -45,7 +34,7 @@ public class HfmTree implements IntOutput {
     }
 
     /**
-     * Добавить узел в дерево с заданными данными и признаком объединенного узла.
+     * Добавляет узел в дерево с заданными данными и признаком объединенного узла.
      * @param key значение ключа узла.
      * @param value данные узла.
      * @param isMerge признак объединенного узла.
@@ -56,7 +45,7 @@ public class HfmTree implements IntOutput {
     }
 
     /**
-     * Добавить узел в дерево с заданными данными.
+     * Добавляет узел в дерево с заданными данными.
      * @param key значение ключа узла.
      * @param value данные узла.
      * @return добавленный узел.
@@ -75,7 +64,7 @@ public class HfmTree implements IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские Заголовок и Нижнее сообщения отключают вывод дочерних сообщений
+        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

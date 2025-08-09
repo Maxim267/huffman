@@ -1,21 +1,21 @@
 package utils.output;
 
 /**
- * Базовый вывод в поток.
+ * Верхнее (header) и нижнее (footer) сообщения потока вывода.
  */
-public class BaseDisplay {
+public abstract class BaseDisplay {
     /**
-     * Верхнее сообщение вывода.
+     * Верхнее сообщение потока вывода.
      */
     protected String header;
 
     /**
-     * Нижнее сообщение вывода.
+     * Нижнее сообщение потока вывода.
      */
     protected String footer;
 
     /**
-     * Конструктор создает новый вывод в поток.
+     * Создает верхнее (header) и нижнее (footer) сообщения потока вывода.
      * @param header верхнее сообщение вывода.
      * @param footer нижнее сообщение вывода.
      */
@@ -25,16 +25,16 @@ public class BaseDisplay {
     }
 
     /**
-     * Получить верхнее сообщение вывода.
-     * @return верхнее сообщение
+     * Получает верхнее сообщение потока вывода.
+     * @return верхнее сообщение.
      */
     public String getHeader() {
         return header;
     }
 
     /**
-     * Получить нижнее сообщение вывода.
-     * @return нижнее сообщение
+     * Получает нижнее сообщение потока вывода.
+     * @return нижнее сообщение.
      */
     public String getFooter() {
         return footer;
