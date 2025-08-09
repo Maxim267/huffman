@@ -3,7 +3,6 @@ package huffman;
 import binarySearchTree.BSNode;
 import hashTable.LHash;
 import linkedList.LNode;
-import utils.calculations.MathUtils;
 import utils.constants.AppConstants;
 import utils.output.Display;
 import utils.output.DualOutput;

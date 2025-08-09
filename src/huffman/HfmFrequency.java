@@ -2,7 +2,6 @@ package huffman;
 
 import hashTable.LHash;
 import linkedList.LList;
-import utils.calculations.MathUtils;
 import utils.constants.AppConstants;
 import utils.output.Display;
 import utils.output.DualOutput;

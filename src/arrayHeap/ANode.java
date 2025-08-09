@@ -25,7 +25,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     /**
      * Поток вывода элемента.
      */
-    public final Display out = new Display(this::display, "<<<Array element: ", ">>>");;
+    public final Display out = new Display(this::display, "<<<Array element: ", ">>>");
 
     /**
      * Создает элемент с заданными ключом и данными.
