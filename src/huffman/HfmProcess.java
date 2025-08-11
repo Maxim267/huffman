@@ -83,7 +83,7 @@ public class HfmProcess {
         // 5. Записать в файл набор кодировки Хаффмана
         hfmCharset.outHuffman.display(huffmanCodeFile, charset);
 
-        // Записать в файл encodedTextFile закодированный по Хаффману исходный текст
+        // 6. Записать в файл encodedTextFile закодированный по Хаффману исходный текст
         writeHuffmanCodeToFile(hfmFrequency.getSourceText(), encodedTextFile, charset);
     }
 
@@ -114,11 +114,11 @@ public class HfmProcess {
         if(hfmCharset == null) {
             hfmCharset = new HfmCharset();
         }
-        // Прочитать набор кодировки Хаффмана из файла
+        // 1. Прочитать набор кодировки Хаффмана из файла
         hfmCharset.readCharsetFromFile(huffmanCodeFile, charset);
 //        hfmCharset.out.display(); // вывести набор символов кодировки Хаффмана
 
-        // Записать в файл decodedTextFile декодированный текст
+        // 2. Записать в файл decodedTextFile декодированный текст
         writeDecodedTextToFile(encodedTextFile, decodedTextFile, charset);
     }
 

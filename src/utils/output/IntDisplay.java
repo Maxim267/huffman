@@ -6,7 +6,13 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * Поток вывода {@code DualOutput} с целочисленным параметром.
+ * Определяет интерфейс {@code IntOutput} вывода в поток.
+ * Как Адаптер связывает выбор потока {@code DualOutput} с интерфейсом вывода в поток {@code IntOutput}.
+ * Как Декоратор обертывает {@code IntOutput} и добавляет новую функциональность к {@code display}.
+ * Классы проекта реализуют интерфейсы вывода в поток с префиксом в названии "out", например:
+ *    {@code BSTree <Integer, String>} tree = new {@code BSTree<>}();
+ *    tree.add(1, "abc");
+ *    tree.out.display(0);
  */
 public class IntDisplay extends BaseDisplay {
     /**
@@ -15,10 +21,10 @@ public class IntDisplay extends BaseDisplay {
     protected final IntOutput output;
 
     /**
-     * Создает поток вывода.
-     * @param output поток вывода.
-     * @param header верхнее сообщение вывода.
-     * @param footer нижнее сообщение вывода.
+     * Определяет интерфейс {@code IntOutput} вывода в поток.
+     * @param output интерфейс вывода в поток.
+     * @param header верхнее оформление сообщения.
+     * @param footer нижнее оформление сообщения.
      */
     public IntDisplay(IntOutput output, String header, String footer) {
         super(header, footer);
@@ -43,12 +49,12 @@ public class IntDisplay extends BaseDisplay {
     }
 
     /**
-     * Выводит в файл.
+     * Создает поток вывода в файл.
      * @param blanks двоичное значение количества пробелов позиционирования дерева, начиная с корневого узла дерева.
      *              Чем больше значение {@code blanks}, тем больше дерево растягивается по горизонтали.
      *              При значении 0 (или меньше 0) производится автоматический расчет значения {@code blanks}.
      *              Не двоичное значение {@code blanks} будет автоматически преобразовано к ближайшему двоичному значению (вверх или вниз).
-     * @param fileName имя файла.
+     * @param fileName имя файла для записи строкового сообщения.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -61,12 +67,12 @@ public class IntDisplay extends BaseDisplay {
     }
 
     /**
-     * Выводит в файл.
+     * Создает поток вывода в файл.
      * @param blanks двоичное значение количества пробелов позиционирования дерева, начиная с корневого узла дерева.
      *              Чем больше значение {@code blanks}, тем больше дерево растягивается по горизонтали.
      *              При значении 0 (или меньше 0) производится автоматический расчет значения {@code blanks}.
      *              Не двоичное значение {@code blanks} будет автоматически преобразовано к ближайшему двоичному значению (вверх или вниз).
-     * @param fileName имя файла.
+     * @param fileName имя файла для записи строкового сообщения.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
     public void display(int blanks, String fileName) throws IOException {

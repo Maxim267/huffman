@@ -14,7 +14,7 @@ public class HfmTree implements IntOutput {
     private final BSTree<Integer, String> tree;
 
     /**
-     * Поток вывода дерева Хаффмана.
+     * Интерфейс вывода в поток дерева Хаффмана.
      */
     public final IntDisplay out = new IntDisplay(this::display, "<<< Дерево Хаффмана: ", ">>>");
 
@@ -64,7 +64,7 @@ public class HfmTree implements IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

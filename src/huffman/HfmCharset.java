@@ -39,12 +39,12 @@ public class HfmCharset implements Output {
     private int maxOffset;
 
     /**
-     * Поток вывода хеш-таблицы с набором символов кодировки Хаффмана.
+     * Интерфейс вывода в поток хеш-таблицы с набором символов кодировки Хаффмана.
      */
     public final Display out = new Display(this::display, "<<< Huffman charset with hash: ", ">>>");
 
     /**
-     * Поток вывода набора символов кодировки Хаффмана.
+     * Интерфейс вывода в поток набора символов кодировки Хаффмана.
      */
     public final Display outHuffman = new Display(this::displayHuffman, "<<< Набор кодировки Хаффмана: ", ">>>");
 
@@ -122,9 +122,7 @@ public class HfmCharset implements Output {
     public void readCharsetFromFile(String fileName, Charset charset) throws IOException {
         Path path = FileSystems.getDefault().getPath("", fileName);
         Scanner in = new Scanner(path, charset);
-        int size = 0;
         while(in.hasNext()) {
-            size++;
             in.nextLine();
         }
         hash = new LHash<>(AppConstants.HASH_SIZE);
@@ -159,7 +157,7 @@ public class HfmCharset implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -175,7 +173,7 @@ public class HfmCharset implements Output {
      *            - вывод в файл (использовать конструктор DualOutput(String fileName)).
      */
     public void displayHuffman(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

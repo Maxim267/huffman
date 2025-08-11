@@ -6,8 +6,7 @@ import utils.output.Output;
 
 /**
  * Односвязный список с хвостовым указателем (Tail-Pointer Singly Linked List).
- * В зависимости от применяемых методов элементы упорядочиваются в естественном порядке ключей (поддерживается уникальность ключей) или в порядке вставки элементов (не поддерживается уникальность).
- * Тип параметров:
+ * В зависимости от применяемых методов элементы упорядочиваются в естественном порядке их ключей {@code K} (поддерживается уникальность ключей) или в порядке вставки элементов (не поддерживается уникальность).
  * @param <K> тип ключей, поддерживаемых этим списком.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -28,7 +27,7 @@ public class LList<K extends Comparable<K>, V> implements Output {
     private int size;
 
     /**
-     * Поток вывода односвязного списка в поток.
+     * Интерфейс вывода в поток односвязного списка в поток.
      */
     public final Display out = new Display(this::display, "<<< Linked List: ", ">>>");
 
@@ -172,7 +171,7 @@ public class LList<K extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

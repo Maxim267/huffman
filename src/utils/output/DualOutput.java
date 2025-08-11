@@ -7,7 +7,11 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 /**
- * Выбор потока вывода.
+ * Как Декоратор реализует Выбор потока вывода в зависимости от параметров конструктора {@code DualOutput}.
+ * Унифицирует вывод в поток как для отдельного объекта, так и для связанных объектов,
+ * с передачей выбранного потока по цепочке вывода.
+ * При работе с {@code DualOutput}, реализующим AutoCloseable, рекомендуется
+ * использовать try-with-resources для корректного закрытия ресурса {@code PrintWriter}.
  */
 public class DualOutput extends OutputDecorator implements AutoCloseable {
     /**
@@ -28,21 +32,21 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     private final boolean useFile;
 
     /**
-     * Верхнее сообщение.
+     * Верхнее оформление сообщения.
      */
     private String header;
     /**
-     * Признак сброса верхнего сообщение.
+     * Признак сброса верхнего оформления сообщения.
      */
     private boolean isHeaderEmpty;
 
     /**
-     * Нижнее сообщение.
+     * Нижнее оформление сообщения.
      */
     private String footer;
 
     /**
-     * Признак сброса нижнего сообщения.
+     * Признак сброса нижнего оформления сообщения.
      */
     private boolean isFooterEmpty;
 
@@ -56,7 +60,7 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
 
     /**
      * Создает поток вывода в файл.
-     * @param fileName имя файла для вывода строкового сообщения.
+     * @param fileName имя файла для записи строкового сообщения.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -66,8 +70,8 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Устанавливает верхнее сообщение.
-     * @param str строковое сообщение.
+     * Устанавливает верхнее оформление сообщения.
+     * @param str верхнее оформление сообщения.
      */
     public void setHeader(String str) {
         header = str;
@@ -75,19 +79,19 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получает верхнее сообщение.
-     * @return верхнее сообщение.
+     * Получает верхнее оформление сообщения.
+     * @return верхнее оформление сообщения.
      */
     public String getHeader() {
         return header;
     }
 
     /**
-     * Получает верхнее сообщение один раз.
+     * Получает верхнее оформление сообщения один раз.
      * Используется в цепочке вложенных объектов при выводе сообщения в поток.
-     * Инициирующий объект выводит свое сообщение и сбрасывает его в пробел.
-     * Остальные потомки выводят этот пробел вместо своего сообщения.
-     * @return верхнее сообщение.
+     * Инициирующий объект выводит свое оформление сообщения и сбрасывает его в пробел.
+     * Остальные потомки выводят этот пробел вместо своего оформления сообщения.
+     * @return верхнее оформление сообщение.
      */
     public String getHeaderOnce() {
         if(isHeaderEmpty) {
@@ -100,8 +104,8 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Устанавливает нижнее сообщение.
-     * @param str нижнее сообщение.
+     * Устанавливает нижнее оформление сообщения.
+     * @param str нижнее оформление сообщения.
      */
     public void setFooter(String str) {
         footer = str;
@@ -109,19 +113,19 @@ public class DualOutput extends OutputDecorator implements AutoCloseable {
     }
 
     /**
-     * Получает нижнее сообщение.
-     * @return нижнее сообщение.
+     * Получает нижнее оформление сообщения.
+     * @return нижнее оформление сообщения.
      */
     public String getFooter() {
         return footer;
     }
 
     /**
-     * Получает нижнее сообщение один раз.
-     * Используется в цепочке вложенных объектов при выводе сообщения в поток.
-     * Инициирующий объект выводит свое сообщение и сбрасывает его в пробел.
-     * Остальные потомки выводят этот пробел вместо своего сообщения.
-     * @return нижнее сообщение.
+     * Получает нижнее оформление сообщения один раз.
+     * Используется в цепочке вложенных объектов при выводе оформления сообщения в поток.
+     * Инициирующий объект выводит свое оформление сообщения и сбрасывает его в пробел.
+     * Остальные потомки выводят этот пробел вместо своего оформления сообщения.
+     * @return нижнее оформление сообщения.
      */
     public String getFooterOnce() {
         if(isFooterEmpty) {

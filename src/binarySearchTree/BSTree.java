@@ -10,9 +10,8 @@ import java.util.Stack;
 
 /**
  * Двоичное дерево поиска (Binary search tree, BST).
- * Узлы упорядочены в соответствии с их естественным порядком ключей {@code K}.
+ * Узлы упорядочены в соответствии с естественным порядком их ключей {@code K}.
  * Уникальность узлов по ключу {@code K} поддерживается.
- * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этим деревом.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -28,7 +27,7 @@ public class BSTree<K extends Comparable<K>, V> implements IntOutput {
     private int size;
 
     /**
-     * Поток вывода двоичного дерева поиска.
+     * Интерфейс вывода в поток двоичного дерева поиска.
      */
     public final IntDisplay out = new IntDisplay(this::display, "<<< BS tree: ", ">>>");
 
@@ -211,7 +210,7 @@ public class BSTree<K extends Comparable<K>, V> implements IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

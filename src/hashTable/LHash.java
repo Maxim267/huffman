@@ -14,8 +14,7 @@ import java.util.Arrays;
  * с разрешением коллизий по методу цепочек (Chaining) с использованием связанного списка.
  * Уникальность элементов связанного списка по ключу {@code K} поддерживается.
  * Отображает диапазон значений ключа на диапазон значений индекса с помощью хеш-функции.
- * Элементы в связанном списке упорядочены в соответствии с их естественным порядком ключей {@code K}.
- * Тип параметров:
+ * Элементы в связанном списке упорядочены в соответствии с естественным порядком их ключей {@code K}.
  * @param <K> тип ключей, поддерживаемых связанным списком.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -32,7 +31,7 @@ public class LHash<K extends Comparable<K>, V> implements Output, HashFunc<K> {
     private int size;
 
     /**
-     * Поток вывода Хеш-таблицы.
+     * Интерфейс вывода в поток Хеш-таблицы.
      */
     public final Display out = new Display(this::display, "<<< Hash Table: ", ">>>");
 
@@ -171,7 +170,7 @@ public class LHash<K extends Comparable<K>, V> implements Output, HashFunc<K> {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

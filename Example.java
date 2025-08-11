@@ -72,5 +72,12 @@ public class Example {
         list.out.display();
 //         list.out.display("file1.txt");
 
+		// Элемент приоритетной кучи
+		
+		// ANode     (Output) 
+        ANode<Integer, String> node = new ANode<>(1, "abc");
+        node.out.display();
+//        node.out.display("file1.txt");
+
         }
 }

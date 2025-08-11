@@ -3,7 +3,12 @@ package utils.calculations;
 /**
  *  Методы расчета значений приложения.
  */
-public class MathUtils {
+public final class MathUtils {
+    /**
+     * Создает Методы расчета.
+     */
+    private MathUtils() {}
+
     /**
      * Получает ближайшее от заданного округленное (вверх или вниз) двоичное значение.
      * @param value целочисленное значение для округления.

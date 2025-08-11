@@ -10,10 +10,9 @@ import java.util.Arrays;
  * Неограниченная приоритетная куча на основе массива (Array-based heap).
  * Куча поддерживает два типа:
  *          Max-Heap - максимальный элемент всегда в корне (по умолчанию);
- *          Min-Heap - минимальный элемент всегда в корне;
- * Элементы упорядочены в соответствии с их естественным порядком ключей {@code K}.
+ *          Min-Heap - минимальный элемент всегда в корне.
+ * Элементы упорядочены в соответствии с естественным порядком их ключей {@code K}.
  * Уникальность элементов не поддерживается.
- * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этой кучей.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -47,12 +46,12 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
     private int currentSize;
 
     /**
-     * Поток вывода приоритетной кучи как массив.
+     * Интерфейс вывода в поток приоритетной кучи как массив.
      */
     public final Display out = new Display(this::display, "<<< Array-based heap (as array): ", ">>>");
 
     /**
-     * Поток вывода приоритетной кучи как дерево.
+     * Интерфейс вывода в поток приоритетной кучи как дерево.
      */
     public final IntDisplay outTree = new IntDisplay(this::display, "<<< Array-based heap (as tree): ", ">>>");
 
@@ -222,7 +221,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -237,7 +236,7 @@ public class AHeap<K extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

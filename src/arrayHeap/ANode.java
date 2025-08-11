@@ -7,7 +7,7 @@ import utils.output.Output;
 import java.util.Objects;
 
 /**
- * Элемент кучи на массиве (Array element).
+ * Элемент кучи основанной на массиве (Array element).
  * @param <K> тип ключей, поддерживаемых этим элементом кучи.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -23,7 +23,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
     private V value;
 
     /**
-     * Поток вывода элемента.
+     * Интерфейс вывода в поток элемента.
      */
     public final Display out = new Display(this::display, "<<<Array element: ", ">>>");
 
@@ -92,7 +92,7 @@ public class ANode<K extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

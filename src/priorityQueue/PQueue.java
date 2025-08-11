@@ -7,9 +7,8 @@ import utils.output.*;
 /**
  * Неограниченная приоритетная очередь (Priority Queue) основанная на приоритетной куче (min-Heap).
  * Куча min-Heap обеспечивает доступ к элементу с наименьшим приоритетом.
- * Элементы упорядочены в соответствии с их естественным порядком ключей {@code K}.
+ * Элементы упорядочены в соответствии с естественным порядком их ключей {@code K}.
  * Уникальность элементов не поддерживается.
- * Тип параметров:
  * @param <K> тип ключей, поддерживаемых этой очередью.
  * @param <V> тип соответствующих ключам данных.
  */
@@ -20,11 +19,11 @@ public class PQueue<K  extends Comparable<K>, V> implements Output, IntOutput {
     private final AHeap<K, V> heap;
 
     /**
-     * Поток вывода приоритетной очереди как массив.
+     * Интерфейс вывода в поток приоритетной очереди как массив.
      */
     public final Display out = new Display(this::display, "<<< Priority Queue (as array): ", ">>>");
     /**
-     * Поток вывода приоритетной очереди как дерево.
+     * Интерфейс вывода в поток приоритетной очереди как дерево.
      */
     public final IntDisplay outTree = new IntDisplay(this::display, "<<< Priority Queue (as tree): ", ">>>");
 
@@ -86,7 +85,7 @@ public class PQueue<K  extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -97,7 +96,7 @@ public class PQueue<K  extends Comparable<K>, V> implements Output, IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

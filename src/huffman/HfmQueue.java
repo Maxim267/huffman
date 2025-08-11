@@ -18,12 +18,12 @@ public class HfmQueue implements Output, IntOutput {
     private PQueue<Integer, HfmTree> queue;
 
     /**
-     * Поток вывода приоритетной очереди как массив.
+     * Интерфейс вывода в поток приоритетной очереди как массив.
      */
     public final Display out = new Display(this::display, "<<< Приоритетная очередь для формирования дерева Хаффмана (как массив): ", ">>>");
 
     /**
-     * Поток вывода приоритетной очереди как дерево.
+     * Интерфейс вывода в поток приоритетной очереди как дерево.
      */
     public final IntDisplay outTree = new IntDisplay(this::display, "<<< Приоритетная очередь для формирования дерева Хаффмана (как дерево): ", ">>>");
 
@@ -112,7 +112,7 @@ public class HfmQueue implements Output, IntOutput {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 
@@ -123,7 +123,7 @@ public class HfmQueue implements Output, IntOutput {
 
     @Override
     public void display(int blanks, DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

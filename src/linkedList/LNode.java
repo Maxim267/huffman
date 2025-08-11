@@ -28,7 +28,7 @@ public class LNode<K extends Comparable<K>, V> implements Output {
     private LNode<K, V> next;
 
     /**
-     * Поток вывода элемента.
+     * Интерфейс вывода в поток элемента.
      */
     public final Display out = new Display(this::display, "<<<List node: ", ">>>");
 
@@ -102,7 +102,7 @@ public class LNode<K extends Comparable<K>, V> implements Output {
 
     @Override
     public void display(DualOutput out) {
-        // Родительские верхнее и нижнее сообщения отключают вывод дочерних сообщений
+        // Инициатор выводит свои верхнее и нижнее оформления сообщения и отключает их вывод в цепочке объектов.
         String header = out.getHeader() != null ? out.getHeaderOnce() : this.out.getHeader();
         String footer = out.getFooter() != null ? out.getFooterOnce() : this.out.getFooter();
 

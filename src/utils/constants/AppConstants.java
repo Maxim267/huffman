@@ -6,7 +6,12 @@ import java.nio.charset.StandardCharsets;
 /**
  * Константы приложения.
  */
-public class AppConstants {
+public final class AppConstants {
+    /**
+     * Создает константы приложения.
+     */
+    private AppConstants() {}
+
     /**
      * Многобайтовый символ новой строки в формате WINDOWS (используется при декодировании).
      */

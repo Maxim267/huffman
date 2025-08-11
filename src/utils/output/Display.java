@@ -6,19 +6,24 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * Поток вывода {@code DualOutput}.
+ * Определяет интерфейс {@code Output} вывода в поток.
+ * Как Адаптер связывает выбор потока {@code DualOutput} с интерфейсом вывода в поток {@code Output}.
+ * Как Декоратор оборачивает {@code Output} и добавляет новую функциональность к {@code display}.
+ * Классы проекта реализуют интерфейсы вывода в поток с префиксом в названии "out", например:
+ *    {@code ANode<Integer, String>} node = new {@code ANode<>}(1, "abc");
+ *    node.out.display();
  */
 public class Display extends BaseDisplay {
     /**
-     * Интерфейс потока вывода.
+     * Интерфейс вывода в поток.
      */
     private final Output output;
 
     /**
-     * Создает поток вывода.
-     * @param output поток вывода.
-     * @param header верхнее сообщение потока вывода.
-     * @param footer нижнее сообщение потока вывода.
+     * Определяет интерфейс {@code Output} вывода в поток.
+     * @param output интерфейс вывода в поток.
+     * @param header верхнее оформление сообщения потока вывода.
+     * @param footer нижнее оформление сообщения потока вывода.
      */
     public Display(Output output, String header, String footer) {
         super(header, footer);
@@ -39,8 +44,8 @@ public class Display extends BaseDisplay {
     }
 
     /**
-     * Выводит в файл.
-     * @param fileName имя файла.
+     * Создает поток вывода в файл.
+     * @param fileName имя файла для записи строкового сообщения.
      * @param charset имя стандартной кодировки символов файла, например, StandardCharsets.UTF_8.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
@@ -53,8 +58,8 @@ public class Display extends BaseDisplay {
     }
 
     /**
-     * Выводит в файл.
-     * @param fileName имя файла.
+     * Создает поток вывода в файл.
+     * @param fileName имя файла для записи строкового сообщения.
      * @throws IOException если при открытии или создании файла произошла ошибка ввода-вывода.
      */
     public void display(String fileName) throws IOException {
